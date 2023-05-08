@@ -34,13 +34,13 @@ async function onSearch(event) {
     try {
       const imagesArr = await pixabayApiService.fetchImages();
       console.log(imagesArr);
-      if (imagesArr.hits.length === 0) {
+      if (imagesArr.totalHits.length === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
-      } else if (imagesArr.hits.length > 0) {
+      } else if (imagesArr.totalHits.length > 0) {
         Notiflix.Notify.success(
-          `Hooray! We found ${imagesArr.hits.length} images.`
+          `Hooray! We found ${imagesArr.totalHits.length} images.`
         );
       } 
       clearMarkup();
@@ -58,7 +58,7 @@ async function onSearch(event) {
       const imagesArr = await pixabayApiService.fetchImages();
       renderImages(imagesArr.hits);
       lightbox.refresh();
-      const nextPageImages = imagesArr.hits.length;
+      const nextPageImages = imagesArr.totalHits.length;
       if (nextPageImages < 40) {
         Notiflix.Notify.info(
           "We're sorry, but you've reached the end of search results."
